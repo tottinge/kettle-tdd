@@ -1,34 +1,59 @@
+from kettle.heater import Heater
+from kettle.kettle_state import KettleState
+from kettle.light import Light
+
+
 class Kettle:
-    def __init__(self):
-        self._heater_on = False
-        self._light_lit = False
+    _state: KettleState
+    _heater: Heater
+    _light: Light
+
+    def __init__(self, initial_state: KettleState = KettleState.IDLE):
+        self._heater = Heater()
+        self._light = Light()
+        self.enter_state(initial_state)
+
+    def enter_state(self, state: KettleState):
+        if state is KettleState.IDLE:
+            self._stop_heater()
+            self._light_off()
+        elif state is KettleState.HEATING:
+            self._start_heater()
+            self._light_on()
+        self._state = state
 
     def is_light_on(self) -> bool:
-        return self._light_lit
+        return self._light.is_lit()
 
     def is_heater_on(self):
-        return self._heater_on
+        return self._heater.is_heating()
 
     def on_button_press(self):
-        self._light_button()
-        self._start_heater()
+        if self._state is KettleState.IDLE:
+            self.enter_state(KettleState.HEATING)
+        else:
+            pass
 
     def on_temp_reached_or_exceeded(self):
-        self._light_lit = False
-        self._heater_on = False
+        self.enter_state(KettleState.IDLE)
 
-    def _light_button(self):
+    def on_pot_lifted(self):
+        self.enter_state(KettleState.IDLE)
+
+    def _light_on(self):
         """
        This would be much more interesting in the real world.
        """
-        self._light_lit = True
+        self._light.turn_on()
 
-    def _start_heater(self) -> None:
+    def _light_off(self):
+        self._light.turn_off()
+
+    def _start_heater(self):
         """
         This would be much more interesting in the real world.
         """
-        self._heater_on = True
+        self._heater.turn_on()
 
-    def on_pot_lifted(self):
-        self._heater_on = False
-        self._light_lit = False
+    def _stop_heater(self):
+        self._heater.turn_off()
