@@ -1,4 +1,6 @@
 class Light:
+    _lit: bool
+
     def turn_on(self):
         self._lit = True
 
