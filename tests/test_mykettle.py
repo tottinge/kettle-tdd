@@ -25,7 +25,7 @@ def test_heating_state_turns_on_devices():
 def test_heating_state_temp_reached_returns_to_idle_state():
     kettle = Kettle(KettleState.HEATING)
     kettle.on_temp_reached_or_exceeded()
-    assert_that(kettle._state, is_(KettleState.IDLE)
+    assert_that(kettle._state, is_(KettleState.IDLE))
 
 
 def test_heating_state_reaches_temperature_and_turns_off():
