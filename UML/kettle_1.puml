@@ -1,0 +1,13 @@
+@startuml
+[*] --> Idle
+
+Idle --> Heating : buttonPressed
+Idle: light off
+Idle: heater off
+
+Heating --> Idle : atTemp
+Heating: light on
+Heating: heater on
+
+Heating --> Idle : potLifted
+@enduml
