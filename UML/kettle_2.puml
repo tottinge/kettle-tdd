@@ -1,0 +1,19 @@
+@startuml
+[*] --> Idle
+
+Idle --> Ready: pot present
+Idle: light off
+Idle: heater off
+
+Ready --> Heating: button pressed
+Ready: light off
+Ready: heater off
+
+Ready --> Idle: pot lifted
+
+Heating --> Ready : atTemp
+Heating: light on
+Heating: heater on
+
+Heating --> Idle : potLifted
+@enduml
