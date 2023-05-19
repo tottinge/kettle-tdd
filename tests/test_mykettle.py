@@ -36,8 +36,7 @@ def test_heating_state_reaches_temperature_and_turns_off():
 
 
 def test_heating_state_and_pot_lifted():
-    kettle = Kettle()
-    kettle.on_button_press()  # Go to heating state
+    kettle = Kettle(KettleState.HEATING)
     kettle.on_pot_lifted()  # when pot is lifted
     assert_that(kettle.is_light_on(), is_(False), "Light left on")
     assert_that(kettle.is_heater_on(), is_(False), "Heater left on!")

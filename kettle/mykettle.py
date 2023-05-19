@@ -35,24 +35,23 @@ class Kettle:
             pass
 
     def on_temp_reached_or_exceeded(self):
-        self.enter_state(KettleState.IDLE)
+        if self._state is KettleState.HEATING:
+            self.enter_state(KettleState.IDLE)
 
     def on_pot_lifted(self):
-        self.enter_state(KettleState.IDLE)
+        if self._state is KettleState.HEATING:
+            self.enter_state(KettleState.IDLE)
 
     def _light_on(self):
         """
-       This would be much more interesting in the real world.
-       """
+        This would be much more interesting in the real world.
+        """
         self._light.turn_on()
 
     def _light_off(self):
         self._light.turn_off()
 
     def _start_heater(self):
-        """
-        This would be much more interesting in the real world.
-        """
         self._heater.turn_on()
 
     def _stop_heater(self):
