@@ -4,7 +4,7 @@ class Heater:
     def __init__(self):
         _heating = False
 
-    def turn_on(self):
+    def turn_on(self) -> object:
         self._heating = True
 
     def is_heating(self):

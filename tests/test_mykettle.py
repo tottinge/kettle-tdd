@@ -10,10 +10,10 @@ def test_initial_state_has_devices_off():
     assert_that(kettle._heater._heating, is_(False))
 
 
-def test_initial_state_button_press_changes_state():
+def test_initial_state_button_press_ignored():
     kettle: Kettle = Kettle()
     kettle.on_button_press()
-    assert_that(kettle._state, is_(KettleState.HEATING))
+    assert_that(kettle._state, is_(KettleState.IDLE))
 
 
 def test_heating_state_turns_on_devices():

@@ -14,31 +14,39 @@ class Kettle:
         self.enter_state(initial_state)
 
     def enter_state(self, state: KettleState):
-        if state is KettleState.IDLE:
-            self._stop_heater()
-            self._light_off()
-        elif state is KettleState.HEATING:
-            self._start_heater()
-            self._light_on()
+        match state:
+            case KettleState.IDLE:
+                self._stop_heater()
+                self._light_off()
+            case KettleState.HEATING:
+                self._start_heater()
+                self._light_on()
+            case _:
+                 # unhandled cases?
+                 # what do we do if we add a state
+                 # and forget to handle it in the
+                 # new state?
+                ...
         self._state = state
 
     def is_light_on(self) -> bool:
         return self._light.is_lit()
 
-    def is_heater_on(self):
+    def is_heater_on(self) -> bool:
         return self._heater.is_heating()
 
-    def on_button_press(self):
+    def on_button_press(self) -> None:
         if self._state is KettleState.IDLE:
-            self.enter_state(KettleState.HEATING)
+            ...
+            # self.enter_state(KettleState.HEATING)
         else:
             pass
 
-    def on_temp_reached_or_exceeded(self):
+    def on_temp_reached_or_exceeded(self) -> None:
         if self._state is KettleState.HEATING:
             self.enter_state(KettleState.IDLE)
 
-    def on_pot_lifted(self):
+    def on_pot_lifted(self) -> None:
         if self._state is KettleState.HEATING:
             self.enter_state(KettleState.IDLE)
 
