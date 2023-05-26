@@ -25,19 +25,16 @@ class Kettle:
         return self._heater.is_heating()
 
     def on_button_press(self) -> None:
-        self._enter_state(
-            self._state.on_button_press(self)
-        )
+        new_state = self._state.on_button_press(self)
+        self._enter_state(new_state)
 
     def on_temp_reached_or_exceeded(self) -> None:
-        self._enter_state(
-            self._state.on_temp_reached_or_exceeded(self)
-        )
+        new_state = self._state.on_temp_reached_or_exceeded(self)
+        self._enter_state(new_state)
 
     def on_pot_lifted(self) -> None:
-        self._enter_state(
-            self._state.on_pot_lifted(self)
-        )
+        new_state = self._state.on_pot_lifted(self)
+        self._enter_state(new_state)
 
     def light_on(self):
         """
